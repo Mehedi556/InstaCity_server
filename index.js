@@ -76,7 +76,12 @@ async function run () {
             res.send(result);
         })
 
-       
+        app.get('/comments/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { postId: id };
+            const comment = await commentsCollection.find(query).toArray();
+            res.send(comment);
+        })
 
     }
     finally{
