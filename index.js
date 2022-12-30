@@ -20,6 +20,8 @@ async function run () {
 
         const detailsCollection = client.db('instaCity').collection('postDetails');
 
+        const commentsCollection = client.db('instaCity').collection('comments');
+
 
 
 
@@ -36,9 +38,13 @@ async function run () {
                     email: req.query.email
             }
             }
-            
             const result = await usersCollection.findOne(query);
             res.send(result);
+        })
+
+        app.put('/users/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: ObjectId(id)}
         })
 
 
@@ -61,6 +67,16 @@ async function run () {
             const post = await detailsCollection.findOne(query);
             res.send(post);
         })
+
+        // --------------------------------------------------------------
+
+        app.post('/comments', async (req , res) => {
+            const comment = req.body;
+            const result = await commentsCollection.insertOne(comment);
+            res.send(result);
+        })
+
+       
 
     }
     finally{
