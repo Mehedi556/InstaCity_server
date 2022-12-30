@@ -57,6 +57,16 @@ async function run () {
 
         app.get('/postDetails', async (req, res) => {
             const query = {};
+            const cursor = detailsCollection.find(query);
+            const posts = await cursor.limit(3).toArray();
+            res.send(posts);
+        })
+
+        // --------------------------------
+
+
+        app.get('/postDetail', async (req, res) => {
+            const query = {};
             const cursor = await detailsCollection.find(query).toArray();
             res.send(cursor);
         })
